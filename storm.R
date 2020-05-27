@@ -1,6 +1,6 @@
 
 
-# start
+# start - test
 
 dest_file <- "zippedfile.bz2"
 
@@ -15,3 +15,10 @@ head(dat)
 
 names(dat)
 
+sum(complete.cases(dat))
+
+
+head(rowSums(is.na(dat)))
+# [1] 0 0 0 0 2 1
+colSums(is.na(airquality))
+#   Ozone Solar.R    Wind    Temp   Month     Day 
