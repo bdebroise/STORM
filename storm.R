@@ -15,10 +15,30 @@ head(dat)
 
 names(dat)
 
-sum(complete.cases(dat))
+# Colmumns with NA
+colSums(is.na(dat))
+
+allDate <- dat$BGN_DATE
+head(allDate)
 
 
-head(rowSums(is.na(dat)))
-# [1] 0 0 0 0 2 1
-colSums(is.na(airquality))
-#   Ozone Solar.R    Wind    Temp   Month     Day 
+library(dplyr)
+datvent <- data.frame(table(dat$EVTYPE))
+datvent <- tbl_df(datvent)
+datvent <- datvent %>% arrange(desc(Freq))
+
+datvent1 <- head(datvent)
+datvent1
+
+datvent <- tbl_df(dat)
+
+datvent <- datvent %>% mutate(NEW_BGN=as.Date(as.character(BGN_DATE), "%m/%d/%Y")) %>% mutate(BGN_YEAR=as.Date(NEW_BGN,"%Y"))
+
+
+
+datvent2 <- datvent %>% group_by(EVTYPE) %>% summarise(total_injuries=sum(INJURIES,na.rm=T),
+                                                       total_fatalities=sum(FATALITIES,na.rm=T)) %>% arrange(desc(total_fatalities))
+
+ctnmae<- data.frame(table(dat$COUNTYNAME))
+
+
